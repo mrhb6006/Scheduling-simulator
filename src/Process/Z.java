@@ -9,7 +9,7 @@ public class Z extends Task {
     public Z(int requiredTime) {
         super(priority);
         setName(this.getClass().getName());
-        setRequiredTime(requiredTime);
+        setBurstTime(requiredTime);
         setResources(new ResourceType[]{C,A});
     }
 }

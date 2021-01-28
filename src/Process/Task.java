@@ -1,17 +1,17 @@
 package Process;
 
-import Resourses.Resource;
 import Resourses.ResourceType;
 
-public class Task {
+public class Task implements Comparable{
 
     protected String name;
     protected int priority;
     protected final int defaultPriority;
     protected ResourceType[] resources;
-    protected int requiredTime;
+    protected int burstTime;
     protected Status status;
     protected int processTime;
+    protected int remainingTime;
 
 
     public Task(int defaultPriority) {
@@ -38,6 +38,14 @@ public class Task {
         return defaultPriority;
     }
 
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
     public void setResources(ResourceType[] resources){
         this.resources = resources;
     }
@@ -46,12 +54,12 @@ public class Task {
         return resources;
     }
 
-    public int getRequiredTime() {
-        return requiredTime;
+    public int getBurstTime() {
+        return burstTime;
     }
 
-    public void setRequiredTime(int requiredTime) {
-        this.requiredTime = requiredTime;
+    public void setBurstTime(int burstTime) {
+        this.burstTime = burstTime;
     }
 
     public Status getStatus() {
@@ -68,6 +76,17 @@ public class Task {
 
     public void setProcessTime(int processTime) {
         this.processTime = processTime;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Task secondTask =(Task) o;
+        if (this.getBurstTime()>secondTask.getBurstTime()){
+            return 1;
+        }else if (this.getBurstTime()<secondTask.getBurstTime()){
+            return -1;
+        }
+        return 0;
     }
 }
 

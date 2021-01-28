@@ -10,7 +10,7 @@ public class X extends Task {
     public X(int requiredTime) {
         super(priority);
         setName(this.getClass().getName());
-        setRequiredTime(requiredTime);
+        setBurstTime(requiredTime);
         setResources(new ResourceType[]{A,B});
     }
 }
