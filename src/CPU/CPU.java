@@ -12,4 +12,10 @@ public class CPU {
     private ArrayList<Task> waiting = new ArrayList<Task>();
     private  Scheduler scheduler;
 
+    public void Processing (){
+        while (ready.size()>0 || waiting.size()>0){
+
+        }
+    }
+
 }
