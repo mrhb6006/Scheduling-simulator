@@ -11,10 +11,12 @@ public class Core extends Thread {
 
     @Override
     public void run() {
-        if (activeTask != null) {
-            doTask();
-        } else {
-            idleTime++;
+        while (true){
+            if (activeTask != null) {
+                doTask();
+            } else {
+                idleTime++;
+            }
         }
     }
 
