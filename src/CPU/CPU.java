@@ -3,19 +3,22 @@ package CPU;
 import Process.Task;
 import Scheduler.Scheduler;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class CPU {
     private  Core[] cores = new Core[4] ;
     private PrintUnit printUnit = new PrintUnit();
-    private ArrayList<Task> ready = new ArrayList<Task>();
-    private ArrayList<Task> waiting = new ArrayList<Task>();
+    private LinkedList<Task> ready = new LinkedList<Task>();
+    private LinkedList<Task> waiting = new LinkedList<Task>();
     private  Scheduler scheduler;
 
-    public void Processing (){
-        while (ready.size()>0 || waiting.size()>0){
-
+    public CPU(Scheduler scheduler){
+        this.scheduler = scheduler;
+        for (int i = 0 ; i<cores.length; i++){
+            cores[i]= new Core();
         }
     }
+
+
 
 }

@@ -11,13 +11,14 @@ public class Task{
     protected int burstTime;
     protected Status status;
     protected int processTime;
-    protected int remainingTime;
     protected int arrivalTime ;
+    protected int waitingTime ;
     protected boolean isDone =  false;
 
 
     public Task(int defaultPriority) {
         this.defaultPriority = defaultPriority;
+        this.priority= defaultPriority;
     }
 
     public String getName() {
@@ -41,11 +42,7 @@ public class Task{
     }
 
     public int getRemainingTime() {
-        return remainingTime;
-    }
-
-    public void setRemainingTime(int remainingTime) {
-        this.remainingTime = remainingTime;
+        return burstTime-processTime;
     }
 
     public void setResources(ResourceType[] resources){
@@ -96,7 +93,13 @@ public class Task{
         this.processTime = processTime;
     }
 
+    public int getWaitingTime() {
+        return waitingTime;
+    }
 
+    public void setWaitingTime(int waitingTime) {
+        this.waitingTime = waitingTime;
+    }
 }
 
 

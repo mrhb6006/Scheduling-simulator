@@ -2,11 +2,13 @@ package Scheduler;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
+
 import Process.Task;
 
 public class RR implements Scheduler, Comparator {
     @Override
-    public void schedule(ArrayList<Task> tasks) {
+    public void schedule(LinkedList<Task> tasks) {
 
     }
 
