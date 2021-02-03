@@ -18,6 +18,7 @@ public class CPU {
         this.scheduler = scheduler;
         for (int i = 0 ; i<cores.length; i++){
             cores[i]= new Core();
+            cores[i].name = "Core "+i;
         }
     }
 

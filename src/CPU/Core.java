@@ -3,9 +3,9 @@ package CPU;
 import Process.Task;
 
 public class Core extends Thread {
+    public String name;
     private int idleTime = 0;
     private Task activeTask;
-    private Task doneTask;
     private SchedulerAlgorithm algorithm;
     private int quantum = 1;
 
@@ -21,7 +21,6 @@ public class Core extends Thread {
     }
 
     private void doTask() {
-        doneTask = null;
         switch (algorithm) {
             case RR:
                 doTaskWithQuantum();
@@ -31,7 +30,6 @@ public class Core extends Thread {
                 doTaskWithoutQuantum();
                 break;
         }
-        doneTask = activeTask;
         if (!activeTask.isDone()){
             CPU.ready.push(activeTask);
             CPU.resourceManager.freeResources(activeTask);
@@ -58,7 +56,6 @@ public class Core extends Thread {
         return idleTime;
     }
 
-
     public boolean isFree() {
         return activeTask==null;
     }
@@ -83,8 +80,12 @@ public class Core extends Thread {
         this.quantum = quantum;
     }
 
-    public Task getDoneTask() {
-        return doneTask;
+    public Task getActiveTask() {
+        return activeTask;
+    }
+
+    public void setActiveTask(Task activeTask) {
+        this.activeTask = activeTask;
     }
 }
 
