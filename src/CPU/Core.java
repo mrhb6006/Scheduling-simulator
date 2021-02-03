@@ -32,6 +32,10 @@ public class Core extends Thread {
                 break;
         }
         doneTask = activeTask;
+        if (!activeTask.isDone()){
+            CPU.ready.push(activeTask);
+            CPU.resourceManager.freeResources(activeTask);
+        }
         activeTask = null;
     }
 

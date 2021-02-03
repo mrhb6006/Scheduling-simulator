@@ -1,15 +1,17 @@
 package CPU;
 
 import Process.Task;
+import Resourses.ResourceManager;
 import Scheduler.Scheduler;
 
 import java.util.LinkedList;
 
 public class CPU {
     private  Core[] cores = new Core[4] ;
-    private PrintUnit printUnit = new PrintUnit();
-    private LinkedList<Task> ready = new LinkedList<Task>();
-    private LinkedList<Task> waiting = new LinkedList<Task>();
+    public static PrintUnit printUnit = new PrintUnit();
+    public static LinkedList<Task> ready = new LinkedList<Task>();
+    public static LinkedList<Task> waiting = new LinkedList<Task>();
+    public static ResourceManager resourceManager;
     private  Scheduler scheduler;
 
     public CPU(Scheduler scheduler){
@@ -29,11 +31,14 @@ public class CPU {
                 if (cores[i].isFree()){
                     Task task = getHighestPriority();
                     if (task!=null){
-                        cores[i].assignTask(task);
+                        if (resourceManager.assignResources(task)){
+                            cores[i].assignTask(task);
+                        }else {
+                            waiting.push(task);
+                        }
                     }
                 }
             }
-
         }
     }
 
@@ -49,4 +54,11 @@ public class CPU {
         return ready.pollFirst();
     }
 
+    public ResourceManager getResourceManager() {
+        return resourceManager;
+    }
+
+    public void setResourceManager(ResourceManager resourceManager) {
+        this.resourceManager = resourceManager;
+    }
 }

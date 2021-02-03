@@ -70,7 +70,7 @@ public class Task{
     }
 
     public boolean isDone() {
-        return isDone;
+        return getRemainingTime()==0;
     }
 
     public void setDone(boolean done) {
