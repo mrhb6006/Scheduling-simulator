@@ -2,7 +2,7 @@ package CPU;
 
 import Process.Task;
 import Resourses.ResourceManager;
-import Scheduler.Scheduler;
+import Scheduler.*;
 
 import java.util.LinkedList;
 
@@ -12,6 +12,7 @@ public class CPU {
     public static LinkedList<Task> waiting = new LinkedList<Task>();
     public static ResourceManager resourceManager;
     private  Scheduler scheduler;
+    public static WaitingScheduler waitingScheduler = new WaitingScheduler();
 
     public CPU(Scheduler scheduler){
         this.scheduler = scheduler;

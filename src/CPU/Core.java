@@ -12,13 +12,14 @@ public class Core extends Thread {
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             if (activeTask != null) {
                 doTask();
+                activeTask = null;
             } else {
                 idleTime++;
             }
-            while (time==Time.getCurrentTime());
+            while (time == Time.getCurrentTime()) ;
         }
     }
 
@@ -32,17 +33,18 @@ public class Core extends Thread {
                 doTaskWithoutQuantum();
                 break;
         }
+
         if (!activeTask.isDone()){
             CPU.ready.push(activeTask);
-            CPU.resourceManager.freeResources(activeTask);
         }
-        activeTask = null;
+        CPU.resourceManager.freeResources(activeTask);
+        CPU.waitingScheduler.Schedule();
     }
 
     private void doTaskWithoutQuantum() {
         while (activeTask.getRemainingTime() != 0) {
             activeTask.setProcessTime(activeTask.getProcessTime() + 1);
-            while (time==Time.getCurrentTime());
+            while (time == Time.getCurrentTime()) ;
         }
     }
 
@@ -51,7 +53,7 @@ public class Core extends Thread {
         while (time != quantum) {
             activeTask.setProcessTime(activeTask.getProcessTime() + 1);
             time++;
-            while (time==Time.getCurrentTime());
+            while (time == Time.getCurrentTime()) ;
         }
     }
 
@@ -61,7 +63,7 @@ public class Core extends Thread {
     }
 
     public boolean isFree() {
-        return activeTask==null;
+        return activeTask == null;
     }
 
     public void assignTask(Task Task) {
