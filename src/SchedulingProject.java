@@ -37,7 +37,7 @@ public class SchedulingProject {
         System.out.println("Enter resource Count A,B,C : ");
         for (int i = 0; i < 3; i++) {
             int n = scanner.nextInt();
-            for (int j = 0; j < n; i++) {
+            for (int j = 0; j < n; j++) {
                 switch (i) {
                     case 0:
                         resourceManager.addResource(new A());
@@ -51,10 +51,11 @@ public class SchedulingProject {
                 }
             }
         }
+        CPU cpu = new CPU(scheduler,resourceManager);
 
-        CPU cpu = new CPU(scheduler);
-
+        System.out.println("Enter task number");
         int taskNumber = scanner.nextInt();
+        scanner.nextLine();
         for (int i = 0; i < taskNumber; i++) {
             Task task=null;
             String[] taskInfo = scanner.nextLine().split(" ");

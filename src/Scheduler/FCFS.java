@@ -13,6 +13,11 @@ public class FCFS implements Scheduler, Comparator<Task> {
     }
 
     @Override
+    public SchedulerAlgorithm getAlgorithm() {
+        return SchedulerAlgorithm.FCFS;
+    }
+
+    @Override
     public int compare(Task task1, Task task2) {
         return task1.getArrivalTime()-task2.getArrivalTime();
     }

@@ -13,6 +13,11 @@ public class RR implements Scheduler, Comparator {
     }
 
     @Override
+    public SchedulerAlgorithm getAlgorithm() {
+        return SchedulerAlgorithm.RR;
+    }
+
+    @Override
     public int compare(Object o, Object t1) {
         return 0;
     }

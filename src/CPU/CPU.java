@@ -14,20 +14,24 @@ public class CPU {
     private  Scheduler scheduler;
     public static WaitingScheduler waitingScheduler = new WaitingScheduler();
 
-    public CPU(Scheduler scheduler){
+    public CPU(Scheduler scheduler ,ResourceManager resourceManager){
         this.scheduler = scheduler;
+        this.setResourceManager(resourceManager);
         resourceManager.countingResources();
         for (int i = 0 ; i<cores.length; i++){
             cores[i]= new Core();
             cores[i].name = "Core "+i;
+            cores[i].setAlgorithm(scheduler.getAlgorithm());
         }
     }
+
+
 
     public void processing (){
         for (int i = 0 ; i<cores.length; i++){
             cores[i].start();
         }
-        while (ready.size()>0 || waiting.size()>0){
+        while (ready.size()>0 || waiting.size()>0 || isBusyThreads()){
             scheduler.schedule(ready);
             for (int i=0 ; i<cores.length;i++){
                 if (cores[i].isFree()){
@@ -47,7 +51,23 @@ public class CPU {
             }
             increaseWaiting();
             Time.increaseTime();
+            increaseThreadTime();
         }
+    }
+
+    private void increaseThreadTime() {
+        for (int i=0 ; i<cores.length;i++){
+            cores[i].setTime(cores[i].getTime()+1);
+        }
+    }
+
+    public boolean isBusyThreads(){
+        for (Core core : cores) {
+            if (!core.isFree()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Task getHighestPriority(){

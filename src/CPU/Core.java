@@ -1,6 +1,7 @@
 package CPU;
 
 import Process.Task;
+import Scheduler.SchedulerAlgorithm;
 
 public class Core extends Thread {
     public String name;
@@ -96,8 +97,17 @@ public class Core extends Thread {
 
     @Override
     public String toString() {
-        return name==null ? "Idle" : activeTask.getName();
+        String temp = this.name+" : ";
+        temp+=activeTask==null ? "Idle" : activeTask.getName();
+        return temp;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 }
 
-enum SchedulerAlgorithm {SJF, FCFS, RR}

@@ -12,6 +12,10 @@ public class SJF implements Scheduler, Comparator<Task> {
 
         Collections.sort(tasks,this);
     }
+    @Override
+    public SchedulerAlgorithm getAlgorithm() {
+        return SchedulerAlgorithm.SJF;
+    }
 
     public String getName() {
         return "SJF";
