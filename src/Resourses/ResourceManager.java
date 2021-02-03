@@ -14,7 +14,7 @@ public class ResourceManager {
         resources.add(resource);
     }
 
-    private void countingResources() {
+    public void countingResources() {
         for (Resource resource : resources) {
             switch (resource.getResourceType()) {
                 case A:

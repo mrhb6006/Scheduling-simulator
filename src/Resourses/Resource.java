@@ -2,7 +2,6 @@ package Resourses;
 
 public class Resource {
     protected String name;
-    protected int availableCount;
     protected ResourceType resourceType;
 
     public String getName() {
@@ -13,9 +12,6 @@ public class Resource {
         this.name = name;
     }
 
-    public int getAvailableCount() {
-        return availableCount;
-    }
 
     public ResourceType getResourceType() {
         return resourceType;
@@ -23,10 +19,6 @@ public class Resource {
 
     public void setResourceType(ResourceType resourceType) {
         this.resourceType = resourceType;
-    }
-
-    public void setAvailableCount(int availableCount) {
-        this.availableCount = availableCount;
     }
 }
 

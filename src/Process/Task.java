@@ -2,6 +2,8 @@ package Process;
 
 import Resourses.ResourceType;
 
+import java.util.Arrays;
+
 public class Task{
 
     protected String name;
@@ -19,6 +21,12 @@ public class Task{
     public Task(int defaultPriority) {
         this.defaultPriority = defaultPriority;
         this.priority= defaultPriority;
+    }
+
+    public Task(String name,int defaultPriority){
+        this.defaultPriority = defaultPriority;
+        this.priority= defaultPriority;
+        this.name= name;
     }
 
     public String getName() {
@@ -99,6 +107,11 @@ public class Task{
 
     public void setWaitingTime(int waitingTime) {
         this.waitingTime = waitingTime;
+    }
+
+    @Override
+    public String toString() {
+        return this.name+" ";
     }
 }
 

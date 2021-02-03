@@ -1,10 +1,9 @@
 package Resourses;
 
 public class C extends Resource {
-    public C(int availableCount){
+    public C(){
         super();
         setName(this.getClass().getName());
-        setAvailableCount(availableCount);
         setResourceType(ResourceType.C);
     }
 }

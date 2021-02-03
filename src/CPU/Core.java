@@ -38,7 +38,7 @@ public class Core extends Thread {
             CPU.ready.push(activeTask);
         }
         CPU.resourceManager.freeResources(activeTask);
-        CPU.waitingScheduler.Schedule();
+        CPU.waitingScheduler.schedule();
     }
 
     private void doTaskWithoutQuantum() {
@@ -92,6 +92,11 @@ public class Core extends Thread {
 
     public void setActiveTask(Task activeTask) {
         this.activeTask = activeTask;
+    }
+
+    @Override
+    public String toString() {
+        return name==null ? "Idle" : activeTask.getName();
     }
 }
 

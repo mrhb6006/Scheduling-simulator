@@ -10,7 +10,7 @@ import Resourses.ResourceManager;
 
 public class WaitingScheduler implements Comparator<Task> {
 
-    public synchronized void Schedule(){
+    public synchronized void schedule(){
         CPU.waiting.sort(this);
         for (int i = 0 ; i<CPU.waiting.size() ; i++){
             Task task = CPU.waiting.get(i);
@@ -28,6 +28,14 @@ public class WaitingScheduler implements Comparator<Task> {
 
     @Override
     public int compare(Task t1, Task t2) {
-        return (t1.getBurstTime()-t1.getWaitingTime())-(t2.getBurstTime()-t2.getWaitingTime());
+        int t1Time = t1.getBurstTime()-t1.getWaitingTime();
+        int t2Time = t2.getBurstTime()-t2.getWaitingTime();
+        System.out.println(t1Time-t2Time);
+        if (t1Time>t2Time){
+            return 1;
+        }else if (t1Time<t2Time){
+            return -1;
+        }
+        return 0;
     }
 }

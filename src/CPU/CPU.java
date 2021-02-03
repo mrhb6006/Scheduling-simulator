@@ -16,13 +16,14 @@ public class CPU {
 
     public CPU(Scheduler scheduler){
         this.scheduler = scheduler;
+        resourceManager.countingResources();
         for (int i = 0 ; i<cores.length; i++){
             cores[i]= new Core();
             cores[i].name = "Core "+i;
         }
     }
 
-    public void Processing (){
+    public void processing (){
         for (int i = 0 ; i<cores.length; i++){
             cores[i].start();
         }

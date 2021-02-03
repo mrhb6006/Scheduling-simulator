@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class PrintUnit extends Thread {
         public static void printCoreInfo(Core core){
-            System.out.println(core.name+" : "+core.getActiveTask().getName());
+            System.out.println(core);
         }
 
         public static void printQueue(){
