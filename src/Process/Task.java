@@ -10,9 +10,9 @@ public class Task{
     protected ResourceType[] resources;
     protected int burstTime;
     protected Status status;
-    protected int processTime;
-    protected int arrivalTime ;
-    protected int waitingTime ;
+    protected int processTime=0;
+    protected int arrivalTime=0; ;
+    protected int waitingTime=0; ;
     protected boolean isDone =  false;
 
 

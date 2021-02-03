@@ -8,6 +8,7 @@ public class Core extends Thread {
     private Task activeTask;
     private SchedulerAlgorithm algorithm;
     private int quantum = 1;
+    private int time = 0;
 
     @Override
     public void run() {
@@ -17,6 +18,7 @@ public class Core extends Thread {
             } else {
                 idleTime++;
             }
+            while (time==Time.getCurrentTime());
         }
     }
 
@@ -40,6 +42,7 @@ public class Core extends Thread {
     private void doTaskWithoutQuantum() {
         while (activeTask.getRemainingTime() != 0) {
             activeTask.setProcessTime(activeTask.getProcessTime() + 1);
+            while (time==Time.getCurrentTime());
         }
     }
 
@@ -48,6 +51,7 @@ public class Core extends Thread {
         while (time != quantum) {
             activeTask.setProcessTime(activeTask.getProcessTime() + 1);
             time++;
+            while (time==Time.getCurrentTime());
         }
     }
 

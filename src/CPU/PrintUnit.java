@@ -8,6 +8,7 @@ public class PrintUnit extends Thread {
         }
 
         public static void printQueue(){
+            System.out.println("Time : "  +Time.getCurrentTime());
             System.out.println(Arrays.toString(CPU.ready.toArray()));
             System.out.println(Arrays.toString(CPU.waiting.toArray()));
         }

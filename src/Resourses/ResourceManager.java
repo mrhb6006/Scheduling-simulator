@@ -57,10 +57,14 @@ public class ResourceManager {
             }
         }
 
-        aAvailableCount -= aR;
-        bAvailableCount -= bR;
-        cAvailableCount -= cR;
-        return true;
+        if(aAvailableCount - aR>=0 && bAvailableCount - bR>=0 && cAvailableCount - cR>=0){
+            aAvailableCount -= aR;
+            bAvailableCount -= bR;
+            cAvailableCount -= cR;
+            return true;
+        }
+        return false;
+
     }
 
     public synchronized void freeResources(Task task){
@@ -83,5 +87,35 @@ public class ResourceManager {
         aAvailableCount += aR;
         bAvailableCount += bR;
         cAvailableCount += cR;
+    }
+
+    public synchronized boolean canBeAssign(Task task) {
+        int aR = 0;
+        int bR = 0;
+        int cR = 0;
+        for (ResourceType resourceType : task.getResources()) {
+            switch (resourceType) {
+                case A:
+                    aR++;
+                    if (aAvailableCount == 0) {
+                        return false;
+                    }
+                    break;
+                case B:
+                    bR++;
+                    if (bAvailableCount == 0) {
+                        return false;
+                    }
+                    break;
+                case C:
+                    cR++;
+                    if (cAvailableCount == 0) {
+                        return false;
+                    }
+                    break;
+            }
+        }
+
+        return aAvailableCount - aR >= 0 && bAvailableCount - bR >= 0 && cAvailableCount - cR >= 0;
     }
 }

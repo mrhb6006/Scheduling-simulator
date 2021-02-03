@@ -8,7 +8,6 @@ import java.util.LinkedList;
 
 public class CPU {
     private  Core[] cores = new Core[4] ;
-    public static PrintUnit printUnit = new PrintUnit();
     public static LinkedList<Task> ready = new LinkedList<Task>();
     public static LinkedList<Task> waiting = new LinkedList<Task>();
     public static ResourceManager resourceManager;
@@ -40,6 +39,12 @@ public class CPU {
                     }
                 }
             }
+            PrintUnit.printQueue();
+            for (Core core : cores){
+                PrintUnit.printCoreInfo(core);
+            }
+            increaseWaiting();
+            Time.increaseTime();
         }
     }
 
@@ -60,6 +65,13 @@ public class CPU {
     }
 
     public void setResourceManager(ResourceManager resourceManager) {
-        this.resourceManager = resourceManager;
+        CPU.resourceManager = resourceManager;
     }
+
+    private void increaseWaiting(){
+        for (Task task: waiting){
+            task.setWaitingTime(task.getWaitingTime()+1);
+        }
+    }
+
 }
