@@ -7,8 +7,9 @@ import java.util.LinkedList;
 
 public class CPU {
     public Core[] cores = new Core[4];
-    public static LinkedList<Task> ready = new LinkedList<Task>();
-    public static LinkedList<Task> waiting = new LinkedList<Task>();
+//    public static LinkedList<Task> ready = new LinkedList<Task>();
+//    public static LinkedList<Task> waiting = new LinkedList<Task>();
+    QueueManager queueManager ;
     private ResourceManager resourceManager;
     private Scheduler scheduler;
     public static boolean finish = false;
@@ -18,6 +19,7 @@ public class CPU {
 
     public CPU(Scheduler scheduler) {
         this.scheduler = scheduler;
+        queueManager = QueueManager.getInstance();
         resourceManager = ResourceManager.getInstance();
         resourceManager.countingResources();
         for (int i = 0; i < cores.length; i++) {
@@ -38,19 +40,20 @@ public class CPU {
             cores[i].start();
         }
 
-        scheduler.schedule(ready);
+        scheduler.schedule(queueManager.getReady());
         printUnit.print();
 
-        while (ready.size() > 0 || waiting.size() > 0 || isBusyThreads()) {
-            scheduler.schedule(ready);
-            for (int i = 0; i < cores.length && ready.size() > 0; i++) {
+        while (queueManager.getReadySize() > 0 || queueManager.getWaitingSize() > 0
+                || isBusyThreads()) {
+            scheduler.schedule(queueManager.getReady());
+            for (int i = 0; i < cores.length && queueManager.getReadySize() > 0; i++) {
                 if (cores[i].isFree()) {
                     Task task = getHighestPriority();
                     if (task != null) {
                         if (resourceManager.assignResources(task)) {
                             cores[i].assignTask(task);
                         } else {
-                            waiting.add(task);
+                            queueManager.addToWaitingQueue(task);
                             i--;
                         }
                     }
@@ -58,7 +61,7 @@ public class CPU {
             }
 
             Time.increaseTime();
-            increaseWaiting();
+            queueManager.increaseWaitingTimeOfWaitTaskQueue();
             printUnit.print();
             execute();
         }
@@ -89,18 +92,12 @@ public class CPU {
 
     public Task getHighestPriority() {
         Task highestPriorityTask = new Task(1);
-        for (int i = 0; i < ready.size(); i++) {
-            if (ready.get(i).getPriority() > highestPriorityTask.getPriority()) {
-                highestPriorityTask = ready.get(i);
+        for (int i = 0; i < queueManager.getReadySize(); i++) {
+            if (queueManager.getTaskFromReadyQueue(i).getPriority() > highestPriorityTask.getPriority()) {
+                highestPriorityTask = queueManager.getTaskFromReadyQueue(i);
             }
         }
-        return ready.pollFirst();
-    }
-
-    private void increaseWaiting() {
-        for (Task task : waiting) {
-            task.setWaitingTime(task.getWaitingTime() + 1);
-        }
+        return queueManager.poll();
     }
 
 }

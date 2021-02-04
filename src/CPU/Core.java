@@ -47,7 +47,7 @@ public class Core extends Thread {
                 CPU.waitingScheduler.schedule();
                 taskQuantum=0;
                 if (!activeTask.isDone()){
-                    CPU.ready.add(activeTask);
+                   QueueManager.getInstance().addToReadyQueue(activeTask);
                 }
                 activeTask=null;
             }

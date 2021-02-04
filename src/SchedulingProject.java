@@ -85,7 +85,7 @@ public class SchedulingProject {
             }
             task.setName(taskInfo[0]);
             task.setArrivalTime(i);
-            CPU.ready.add(task);
+            QueueManager.getInstance().addToReadyQueue(task);
         }
 
         cpu.processing();

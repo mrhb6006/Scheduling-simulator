@@ -38,13 +38,13 @@ public class PrintUnit extends Thread {
 
     public void printQueue() {
         System.out.println("Time: " + (Time.getCurrentTime()));
-        System.out.println("ready queue: " + Arrays.toString(CPU.ready.toArray()));
-        System.out.println("waiting queue: " + Arrays.toString(CPU.waiting.toArray()));
+        System.out.println("ready queue: " + Arrays.toString(QueueManager.getInstance().getReady().toArray()));
+        System.out.println("waiting queue: " + Arrays.toString(QueueManager.getInstance().getWaiting().toArray()));
     }
 
     public void printIdleTime(){
         for (Core core: cores){
-            System.out.println(core.getName()+" idleTime : "+core.getIdleTime());
+            System.out.println(core.name+" idleTime : "+core.getIdleTime());
         }
     }
 }
