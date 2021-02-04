@@ -17,29 +17,29 @@ public class QueueManager {
         return queueManager;
     }
 
-    public void addToReadyQueue(Task task) {
+    public synchronized void addToReadyQueue(Task task) {
         ready.add(task);
     }
 
-    public void addToWaitingQueue(Task task) {
+    public synchronized void addToWaitingQueue(Task task) {
         waiting.add(task);
     }
 
-    public void readyToWaiting(Task task) {
+    public synchronized void readyToWaiting(Task task) {
         waiting.add(task);
         ready.remove(task);
     }
 
-    public void waitingToReady(Task task) {
+    public synchronized void waitingToReady(Task task) {
         ready.add(task);
         waiting.remove(task);
     }
 
-    public Task getTaskFromReadyQueue(int index) {
+    public synchronized Task getTaskFromReadyQueue(int index) {
         return ready.get(index);
     }
 
-    public Task getTaskFromWaitingQueue(int index) {
+    public synchronized Task getTaskFromWaitingQueue(int index) {
         return waiting.get(index);
     }
 
@@ -67,11 +67,11 @@ public class QueueManager {
         return waiting.size();
     }
 
-    public Task poll() {
+    public synchronized Task poll() {
         return ready.pollFirst();
     }
 
-    public void increaseWaitingTimeOfWaitTaskQueue() {
+    public synchronized void increaseWaitingTimeOfWaitTaskQueue() {
         for (Task task : waiting) {
             task.setWaitingTime(task.getWaitingTime() + 1);
         }

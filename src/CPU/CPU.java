@@ -51,7 +51,7 @@ public class CPU {
                         if (resourceManager.assignResources(task)) {
                             cores[i].assignTask(task);
                         } else {
-                            queueManager.addToWaitingQueue(task);
+                            queueManager.readyToWaiting(task);
                             i--;
                         }
                     }
