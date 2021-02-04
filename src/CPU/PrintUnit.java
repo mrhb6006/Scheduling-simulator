@@ -16,7 +16,7 @@ public class PrintUnit extends Thread {
     public void run() {
         while (!CPU.finish) {
             if (print) {
-                printQueue();
+                print();
             }
         }
     }

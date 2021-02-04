@@ -7,8 +7,6 @@ import java.util.LinkedList;
 
 public class CPU {
     public Core[] cores = new Core[4];
-//    public static LinkedList<Task> ready = new LinkedList<Task>();
-//    public static LinkedList<Task> waiting = new LinkedList<Task>();
     QueueManager queueManager ;
     private ResourceManager resourceManager;
     private Scheduler scheduler;
