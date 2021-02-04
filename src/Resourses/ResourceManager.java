@@ -5,13 +5,26 @@ import Process.Task;
 import java.util.ArrayList;
 
 public class ResourceManager {
+    private static ResourceManager resourceManager = new ResourceManager();
     private ArrayList<Resource> resources = new ArrayList<>();
     private int aAvailableCount = 0;
     private int bAvailableCount = 0;
     private int cAvailableCount = 0;
 
+    public static ResourceManager getInstance(){
+        return resourceManager;
+    }
+
+    private ResourceManager(){
+
+    }
+
     public void addResource(Resource resource) {
         resources.add(resource);
+    }
+
+    public void printResource(){
+        System.out.println("available -> A :"+ aAvailableCount+ " B :"+bAvailableCount+" C :"+cAvailableCount);
     }
 
     public void countingResources() {

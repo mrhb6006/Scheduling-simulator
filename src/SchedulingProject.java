@@ -19,6 +19,7 @@ public class SchedulingProject {
         System.out.println("2)JSF");
         System.out.println("3)RR");
         int temp = scanner.nextInt();
+        int quantum=1;
         Scheduler scheduler;
         switch (temp) {
             case 1:
@@ -29,11 +30,18 @@ public class SchedulingProject {
                 break;
             case 3:
                 scheduler = new RR();
+                System.out.println("enter quantum : ");
+                quantum = scanner.nextInt();
+                scanner.nextLine();
+
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + temp);
         }
-        ResourceManager resourceManager = new ResourceManager();
+        if (scheduler instanceof RR){
+           ((RR) scheduler).quantum = quantum;
+        }
+        ResourceManager resourceManager = ResourceManager.getInstance();
         System.out.println("Enter resource Count A,B,C : ");
         for (int i = 0; i < 3; i++) {
             int n = scanner.nextInt();
@@ -51,13 +59,15 @@ public class SchedulingProject {
                 }
             }
         }
-        CPU cpu = new CPU(scheduler,resourceManager);
+        CPU cpu = new CPU(scheduler);
 
         System.out.println("Enter task number");
         int taskNumber = scanner.nextInt();
         scanner.nextLine();
+        System.out.println("enter Task info");
+
         for (int i = 0; i < taskNumber; i++) {
-            Task task=null;
+            Task task = null;
             String[] taskInfo = scanner.nextLine().split(" ");
             switch (taskInfo[1]) {
                 case "X":
@@ -75,60 +85,10 @@ public class SchedulingProject {
             }
             task.setName(taskInfo[0]);
             task.setArrivalTime(i);
-            CPU.ready.push(task);
+            CPU.ready.add(task);
         }
 
         cpu.processing();
-
+        System.exit(0);
     }
 }
-
-
-
-
-/*
-*
-*  Task t1 = new Task("t1",1);
-        t1.setBurstTime(5);
-        t1.setWaitingTime(10);
-
-        Task t2 = new Task("t2",1);
-        t2.setBurstTime(5);
-        t2.setWaitingTime(2);
-        Task t3 = new Task("t3",1);
-        t3.setBurstTime(6);
-        t3.setWaitingTime(10);
-        Task t4 = new Task("t4",1);
-        t4.setBurstTime(5);
-        t4.setWaitingTime(2);
-//        Task t5 = new Task(1);
-//        t5.setArrivalTime(55);
-//        Task t6 = new Task(1);
-//        t6.setArrivalTime(2);
-//        Task t7 = new Task(1);
-//        t7.setArrivalTime(1);
-
-        LinkedList<Task> t = new LinkedList<Task>();
-        t.add(t1);
-        t.add(t2);
-        t.add(t3);
-        t.add(t4);
-//        t.add(t5);
-//        t.add(t6);
-//        t.add(t7);
-
-        for (int i =0 ; i< 4; i++){
-            System.out.println(t.get(i).getName()+" "+t.get(i).getBurstTime()+ " "+t.get(i).getWaitingTime());
-
-        }
-        CPU.waiting=t;
-        WaitingScheduler sjf = new WaitingScheduler();
-        sjf.schedule();
-        //PrintUnit.printQueue();
-
-        System.out.println("----------");
-        for (int i =0 ; i< 4; i++){
-            System.out.println(t.get(i).getName()+" ");
-        }
-* */
-

@@ -1,6 +1,7 @@
 package CPU;
 
 import Process.Task;
+import Resourses.ResourceManager;
 import Scheduler.SchedulerAlgorithm;
 
 public class Core extends Thread {
@@ -9,22 +10,20 @@ public class Core extends Thread {
     private Task activeTask;
     private SchedulerAlgorithm algorithm;
     private int quantum = 1;
-    private int time = 0;
+    private int taskQuantum = 0;
+    private ResourceManager resourceManager;
+
+    public Core(){
+        resourceManager=ResourceManager.getInstance();
+    }
 
     @Override
     public void run() {
-        while (true) {
-            if (activeTask != null) {
-                doTask();
-                activeTask = null;
-            } else {
-                idleTime++;
-            }
-            while (time == Time.getCurrentTime()) ;
+        while (!CPU.finish) {
         }
     }
 
-    private void doTask() {
+    void doTask() {
         switch (algorithm) {
             case RR:
                 doTaskWithQuantum();
@@ -34,28 +33,42 @@ public class Core extends Thread {
                 doTaskWithoutQuantum();
                 break;
         }
+        checkTaskStatus();
+    }
 
-        if (!activeTask.isDone()){
-            CPU.ready.push(activeTask);
+    public void checkTaskStatus(){
+        if (activeTask==null){
+            return;
         }
-        CPU.resourceManager.freeResources(activeTask);
-        CPU.waitingScheduler.schedule();
+
+        if (algorithm==SchedulerAlgorithm.RR){
+            if (taskQuantum==quantum){
+                resourceManager.freeResources(activeTask);
+                CPU.waitingScheduler.schedule();
+                taskQuantum=0;
+                if (!activeTask.isDone()){
+                    CPU.ready.add(activeTask);
+                }
+                activeTask=null;
+            }
+
+        }else if (activeTask.isDone()){
+            resourceManager.freeResources(activeTask);
+            CPU.waitingScheduler.schedule();
+            activeTask=null;
+            taskQuantum=0;
+        }
     }
 
     private void doTaskWithoutQuantum() {
-        while (activeTask.getRemainingTime() != 0) {
-            activeTask.setProcessTime(activeTask.getProcessTime() + 1);
-            while (time == Time.getCurrentTime()) ;
-        }
+        activeTask.setProcessTime(activeTask.getProcessTime() + 1);
     }
 
     private void doTaskWithQuantum() {
-        int time = 0;
-        while (time != quantum) {
-            activeTask.setProcessTime(activeTask.getProcessTime() + 1);
-            time++;
-            while (time == Time.getCurrentTime()) ;
-        }
+      if (!activeTask.isDone()) {
+          activeTask.setProcessTime(activeTask.getProcessTime() + 1);
+      }
+      taskQuantum++;
     }
 
 
@@ -63,12 +76,16 @@ public class Core extends Thread {
         return idleTime;
     }
 
+    public void setIdleTime(int idleTime) {
+        this.idleTime = idleTime;
+    }
+
     public boolean isFree() {
         return activeTask == null;
     }
 
-    public void assignTask(Task Task) {
-        this.activeTask = Task;
+    public void assignTask(Task task) {
+        this.activeTask = task;
     }
 
     public SchedulerAlgorithm getAlgorithm() {
@@ -102,12 +119,5 @@ public class Core extends Thread {
         return temp;
     }
 
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
-    }
 }
 

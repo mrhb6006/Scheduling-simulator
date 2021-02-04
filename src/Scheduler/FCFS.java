@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
+import CPU.Time;
 import Process.Task;
 public class FCFS implements Scheduler, Comparator<Task> {
     @Override

@@ -14,14 +14,14 @@ public class WaitingScheduler implements Comparator<Task> {
         CPU.waiting.sort(this);
         for (int i = 0 ; i<CPU.waiting.size() ; i++){
             Task task = CPU.waiting.get(i);
-            if (CPU.resourceManager.canBeAssign(task)){
+            if (ResourceManager.getInstance().canBeAssign(task)){
                 if (task.getWaitingTime()>task.getBurstTime()/2){
                     task.setPriority(task.getPriority()+1);
                 }else if(task.getBurstTime()-task.getWaitingTime()<0){
                     task.setPriority(task.getPriority()+2);
                 }
                 CPU.waiting.remove(i);
-                CPU.ready.push(task);
+                CPU.ready.add(task);
             }
         }
     }
@@ -30,7 +30,6 @@ public class WaitingScheduler implements Comparator<Task> {
     public int compare(Task t1, Task t2) {
         int t1Time = t1.getBurstTime()-t1.getWaitingTime();
         int t2Time = t2.getBurstTime()-t2.getWaitingTime();
-        System.out.println(t1Time-t2Time);
         if (t1Time>t2Time){
             return 1;
         }else if (t1Time<t2Time){

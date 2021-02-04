@@ -5,6 +5,6 @@ import java.util.LinkedList;
 
 import Process.Task;
 public interface Scheduler {
-    public void schedule(LinkedList<Task> tasks);
-    public SchedulerAlgorithm getAlgorithm();
+    void schedule(LinkedList<Task> tasks);
+    SchedulerAlgorithm getAlgorithm();
 }

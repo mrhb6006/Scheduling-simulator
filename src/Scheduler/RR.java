@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import Process.Task;
 
 public class RR implements Scheduler, Comparator {
+    public int quantum = 1;
     @Override
     public void schedule(LinkedList<Task> tasks) {
 
