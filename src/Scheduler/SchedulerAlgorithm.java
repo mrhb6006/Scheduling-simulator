@@ -1,6 +1,6 @@
 package Scheduler;
 
 public enum SchedulerAlgorithm {
-   SJF, FCFS, RR;
+   SJF, FCFS, RR,HRRN;
 
 }

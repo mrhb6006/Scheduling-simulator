@@ -29,6 +29,7 @@ public class Core extends Thread {
                 doTaskWithQuantum();
                 break;
             case SJF:
+            case HRRN:
             case FCFS:
                 doTaskWithoutQuantum();
                 break;

@@ -3,11 +3,12 @@ package CPU;
 import Process.Task;
 import Resourses.ResourceManager;
 import Scheduler.*;
+
 import java.util.LinkedList;
 
 public class CPU {
     public Core[] cores = new Core[4];
-    QueueManager queueManager ;
+    QueueManager queueManager;
     private ResourceManager resourceManager;
     private Scheduler scheduler;
     public static boolean finish = false;
@@ -24,7 +25,7 @@ public class CPU {
             cores[i] = new Core();
             cores[i].name = "Core " + (i + 1);
             cores[i].setAlgorithm(scheduler.getAlgorithm());
-            if (scheduler instanceof RR){
+            if (scheduler instanceof RR) {
                 cores[i].setQuantum(((RR) scheduler).quantum);
             }
         }
@@ -71,13 +72,25 @@ public class CPU {
 
     private void execute() {
         for (int i = 0; i < cores.length; i++) {
-            if (!cores[i].isFree()){
+            if (!cores[i].isFree()) {
                 cores[i].doTask();
-            }else {
-                cores[i].setIdleTime(cores[i].getIdleTime()+1);
+
+            } else {
+                cores[i].setIdleTime(cores[i].getIdleTime() + 1);
             }
         }
     }
+
+    private void execute2() {
+        for (int i = 0; i < cores.length; i++) {
+            if (!cores[i].isFree()) {
+                cores[i].doTask();
+            } else {
+                cores[i].setIdleTime(cores[i].getIdleTime() + 1);
+            }
+        }
+    }
+
 
     public boolean isBusyThreads() {
         for (Core core : cores) {
