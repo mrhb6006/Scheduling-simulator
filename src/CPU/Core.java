@@ -6,6 +6,7 @@ import Scheduler.SchedulerAlgorithm;
 
 public class Core extends Thread {
     public String name;
+    int time = 0;
     private int idleTime = 0;
     private Task activeTask;
     private SchedulerAlgorithm algorithm;
@@ -20,6 +21,20 @@ public class Core extends Thread {
     @Override
     public void run() {
         while (!CPU.finish) {
+            //System.out.println(time+" "+Time.getCurrentTime());
+//            try {
+//                sleep(20);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            if (Time.getCurrentTime()!=time){
+//                if (activeTask!=null){
+//                    doTask();
+//                }else{
+//                    idleTime++;
+//                }
+//                time= Time.getCurrentTime();
+//            }
         }
     }
 

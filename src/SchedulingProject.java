@@ -18,6 +18,7 @@ public class SchedulingProject {
         System.out.println("1)FCFS");
         System.out.println("2)JSF");
         System.out.println("3)RR");
+        System.out.println("4)HRRN");
         int temp = scanner.nextInt();
         int quantum=1;
         Scheduler scheduler;
@@ -34,6 +35,9 @@ public class SchedulingProject {
                 quantum = scanner.nextInt();
                 scanner.nextLine();
 
+                break;
+            case 4:
+                scheduler = new HRRN();
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + temp);

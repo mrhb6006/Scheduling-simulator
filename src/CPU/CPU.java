@@ -59,7 +59,13 @@ public class CPU {
                 }
             }
 
+            //PrintUnit.print=true;
             Time.increaseTime();
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             queueManager.increaseWaitingTimeOfWaitTaskQueue();
             printUnit.print();
             execute();
@@ -74,7 +80,6 @@ public class CPU {
         for (int i = 0; i < cores.length; i++) {
             if (!cores[i].isFree()) {
                 cores[i].doTask();
-
             } else {
                 cores[i].setIdleTime(cores[i].getIdleTime() + 1);
             }

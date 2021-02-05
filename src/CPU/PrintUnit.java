@@ -15,8 +15,14 @@ public class PrintUnit extends Thread {
     @Override
     public void run() {
         while (!CPU.finish) {
+//            try {
+//                sleep(6);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             if (print) {
                 print();
+                print=false;
             }
         }
     }
